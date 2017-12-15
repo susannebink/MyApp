@@ -199,6 +199,7 @@ public class ThirdActivity extends AppCompatActivity {
         replaceString = replaceString.replace("&rdquo;", "\"");
         replaceString = replaceString.replace("&lt;", "<");
         replaceString = replaceString.replace("&gt;", ">");
+        replaceString = replaceString.replace("&eacute;", "é");
         return replaceString;
     }
 

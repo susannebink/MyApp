@@ -34,11 +34,11 @@ public class ScoreArrayAdapter extends ArrayAdapter {
         for (Map.Entry<Long, String> entry : map.entrySet()) {
             Long highScore = entry.getKey();
             String userName = entry.getValue();
+
             HighScore newScore = new HighScore(userName, highScore, i);
             myScoreList.add(newScore);
             i++;
         }
-        System.out.println(myScoreList);
     }
 
     @NonNull
@@ -68,7 +68,7 @@ public class ScoreArrayAdapter extends ArrayAdapter {
 
     @Override
     public int getCount(){
-        return 100;
+        return myScoreList.size();
     }
 
 }

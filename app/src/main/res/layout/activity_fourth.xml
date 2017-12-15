@@ -28,7 +28,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="Top 10 Scoreboard"
+        android:text="Scoreboard"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="28sp"
