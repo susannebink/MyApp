@@ -23,6 +23,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Show the scoreboard of all users highest to lowest.
+ */
 public class FourthActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;

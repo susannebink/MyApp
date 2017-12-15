@@ -17,6 +17,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * Choose the quiz you want to play. Select by category and difficulty (optional).
+ */
 public class SecondActivity extends AppCompatActivity {
     Spinner spinner;
     Spinner difficulty;

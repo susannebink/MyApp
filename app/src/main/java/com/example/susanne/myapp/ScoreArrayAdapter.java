@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * Created by Susanne on 14-12-2017.
  * Custom array adapter for the scoreboard
  */
 

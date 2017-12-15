@@ -30,6 +30,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Activity to do the quiz. Show the questions and answers, check the correctness and keep track of
+ * points.
+ */
+
 public class ThirdActivity extends AppCompatActivity {
     JSONArray quiz;
     TextView question = findViewById(R.id.question);
@@ -167,7 +172,7 @@ public class ThirdActivity extends AppCompatActivity {
             B.setTag(answers.getJSONObject(1).getBoolean("correct"));
             C.setText("C) " + Html.fromHtml(answers.getJSONObject(2).getString("text")));
             C.setTag(answers.getJSONObject(2).getBoolean("correct"));
-            D.setText("D) " + Html.fromHtml(replaceChar(answers.getJSONObject(3).getString("text"))));
+            D.setText("D) " + Html.fromHtml(answers.getJSONObject(3).getString("text")));
             D.setTag(answers.getJSONObject(3).getBoolean("correct"));
 
         } catch (JSONException e){

@@ -27,6 +27,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Log in or sign in user and add user's information to the database.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;

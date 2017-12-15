@@ -1,7 +1,6 @@
 package com.example.susanne.myapp;
 
 /**
- * Created by Susanne on 8-12-2017.
  * Used to store the information of the user for the firebase.
  */
 
