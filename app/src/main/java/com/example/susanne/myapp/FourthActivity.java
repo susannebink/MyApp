@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class FourthActivity extends AppCompatActivity {
 
@@ -47,26 +49,19 @@ public class FourthActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 Iterator<DataSnapshot> users = dataSnapshot.child("users").getChildren().iterator();
-                Log.d("value", "Value is: " + users);
 
-                ArrayList<Long> highScoreArray = new ArrayList<>();
-                ArrayAdapter<Long> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, highScoreArray);
-
-
-                Integer i = 1;
+                Map<Long, String> highScoreArray = new TreeMap<>(Collections.<Long>reverseOrder());
                 while(users.hasNext()){
                     DataSnapshot user = users.next();
                     String name = user.child("userName").getValue().toString();
                     Long score = (Long) user.child("highScore").getValue();
 
-                    highScoreArray.add(score);
-
-                    i++;
+                    highScoreArray.put(score, name);
                 }
-                Collections.sort(highScoreArray);
-                Collections.reverse(highScoreArray);
-                mList.setAdapter(arrayAdapter);
+
+                ScoreArrayAdapter arrayAdapter = new ScoreArrayAdapter(getApplicationContext(), R.layout.score_row, R.id.number, highScoreArray);
                 arrayAdapter.notifyDataSetChanged();
+                mList.setAdapter(arrayAdapter);
             }
 
             @Override
