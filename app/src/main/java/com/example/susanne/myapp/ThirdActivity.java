@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -31,13 +32,13 @@ import org.json.JSONObject;
 
 public class ThirdActivity extends AppCompatActivity {
     JSONArray quiz;
-    TextView question;
+    TextView question = findViewById(R.id.question);
     Integer index;
-    TextView A;
-    TextView B;
-    TextView C;
-    TextView D;
-    TextView points_display;
+    TextView A = findViewById(R.id.A);
+    TextView B = findViewById(R.id.B);
+    TextView C = findViewById(R.id.C);
+    TextView D = findViewById(R.id.D);
+    TextView points_display = findViewById(R.id.points);
     String id;
     UserData mUser;
     String url;
@@ -65,13 +66,6 @@ public class ThirdActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         id = user.getUid();
 
-        // Find the textviews needed to display the question and answers
-        question = findViewById(R.id.question);
-        A = findViewById(R.id.A);
-        B = findViewById(R.id.B);
-        C = findViewById(R.id.C);
-        D = findViewById(R.id.D);
-        points_display = findViewById(R.id.points);
         points_display.setText("Score: ");
 
         getUserFromDB();
@@ -163,19 +157,18 @@ public class ThirdActivity extends AppCompatActivity {
         }
         try {
             JSONObject object = quiz.getJSONObject(i);
-            question.setText(replaceChar(object.getString("text")));
+            question.setText(Html.fromHtml(object.getString("text")));
             JSONArray answers = object.getJSONArray("answers");
 
             // Give a tag to every answer to determine whether it is true or false
-            A.setText("A) " + replaceChar(answers.getJSONObject(0).getString("text")));
+            A.setText("A) " + Html.fromHtml(answers.getJSONObject(0).getString("text")));
             A.setTag(answers.getJSONObject(0).getBoolean("correct"));
-            B.setText("B) " + replaceChar(answers.getJSONObject(1).getString("text")));
+            B.setText("B) " + Html.fromHtml(answers.getJSONObject(1).getString("text")));
             B.setTag(answers.getJSONObject(1).getBoolean("correct"));
-            C.setText("C) " + replaceChar(answers.getJSONObject(2).getString("text")));
+            C.setText("C) " + Html.fromHtml(answers.getJSONObject(2).getString("text")));
             C.setTag(answers.getJSONObject(2).getBoolean("correct"));
-            D.setText("D) " + replaceChar(answers.getJSONObject(3).getString("text")));
+            D.setText("D) " + Html.fromHtml(replaceChar(answers.getJSONObject(3).getString("text"))));
             D.setTag(answers.getJSONObject(3).getBoolean("correct"));
-
 
         } catch (JSONException e){
             question.setText("Could not load question");
@@ -240,7 +233,6 @@ public class ThirdActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                Log.d("value", "iets");
                 mUser = dataSnapshot.child("users").child(id).getValue(UserData.class);
                 points_display.setText("Score: " + mUser.highScore);
             }
