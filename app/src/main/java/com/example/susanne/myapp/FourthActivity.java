@@ -35,13 +35,17 @@ public class FourthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fourth);
 
+        // Get firebase information of user
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+
         mList = findViewById(R.id.scoreBoard);
+
         setListener();
         getDataFromDB();
     }
 
+    // Function to get the scores from all users from the firebase database
     public void getDataFromDB(){
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -50,7 +54,9 @@ public class FourthActivity extends AppCompatActivity {
                 // whenever data at this location is updated.
                 Iterator<DataSnapshot> users = dataSnapshot.child("users").getChildren().iterator();
 
+                // Use a treemap to store the user with its highscore in the correct order (great to small)
                 Map<Long, String> highScoreArray = new TreeMap<>(Collections.<Long>reverseOrder());
+
                 while(users.hasNext()){
                     DataSnapshot user = users.next();
                     String name = user.child("userName").getValue().toString();
@@ -59,6 +65,7 @@ public class FourthActivity extends AppCompatActivity {
                     highScoreArray.put(score, name);
                 }
 
+                // Set custom adapter for listview
                 ScoreArrayAdapter arrayAdapter = new ScoreArrayAdapter(getApplicationContext(), R.layout.score_row, R.id.number, highScoreArray);
                 arrayAdapter.notifyDataSetChanged();
                 mList.setAdapter(arrayAdapter);
@@ -72,6 +79,7 @@ public class FourthActivity extends AppCompatActivity {
         });
     }
 
+    // Check if the current user is logged in, go to login page if not
     public void setListener(){
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override

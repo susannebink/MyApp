@@ -2,6 +2,7 @@ package com.example.susanne.myapp;
 
 /**
  * Created by Susanne on 15-12-2017.
+ * Used to keep track of the ranking of users' highscores
  */
 
 public class HighScore {

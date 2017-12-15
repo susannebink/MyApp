@@ -51,18 +51,21 @@ public class ThirdActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third);
 
+        // Get the chosen category and difficulty
         Intent intent = getIntent();
         String category = intent.getStringExtra("category");
         difficulty = intent.getStringExtra("difficulty");
+        difficulty = getDifficulty(difficulty);
         url = getApi(category);
 
+        // Get user's firebase information
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         setListener();
         FirebaseUser user = mAuth.getCurrentUser();
         id = user.getUid();
 
-        difficulty = getDifficulty(difficulty);
+        // Find the textviews needed to display the question and answers
         question = findViewById(R.id.question);
         A = findViewById(R.id.A);
         B = findViewById(R.id.B);
@@ -75,6 +78,7 @@ public class ThirdActivity extends AppCompatActivity {
         getQuestions(url + difficulty);
     }
 
+    // Function the determine the correct url for json request with the chosen category
     public String getApi(String name){
         String url = "http://cocktail-trivia-api.herokuapp.com/api/category/";
         switch (name){
@@ -121,6 +125,8 @@ public class ThirdActivity extends AppCompatActivity {
         }
         return url;
     }
+
+    // Json request for the questions
     public void getQuestions(String url){
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -139,6 +145,8 @@ public class ThirdActivity extends AppCompatActivity {
         });
         queue.add(request);
     }
+
+    // Function the update the highscore in the database and in the textview
     public void updateHighScore(Integer points){
         Integer highScore = mUser.highScore + points;
         System.out.println("hoi");
@@ -146,6 +154,7 @@ public class ThirdActivity extends AppCompatActivity {
         points_display.setText("Score: " + mUser.highScore);
     }
 
+    // Function to set the questions and answers from the json request in the textviews
     public void loadQuestion(Integer i){
         if (index >= quiz.length()){
             Intent intent = new Intent(ThirdActivity.this, SecondActivity.class);
@@ -157,6 +166,7 @@ public class ThirdActivity extends AppCompatActivity {
             question.setText(replaceChar(object.getString("text")));
             JSONArray answers = object.getJSONArray("answers");
 
+            // Give a tag to every answer to determine whether it is true or false
             A.setText("A) " + replaceChar(answers.getJSONObject(0).getString("text")));
             A.setTag(answers.getJSONObject(0).getBoolean("correct"));
             B.setText("B) " + replaceChar(answers.getJSONObject(1).getString("text")));
@@ -172,6 +182,8 @@ public class ThirdActivity extends AppCompatActivity {
         }
     }
 
+    // On click for the textviews. When an answer was chosen, the correctness is checked, the score
+    // is updated and the next question will be loaded.
     public void goToNext(View view) {
         Boolean correct = (Boolean) view.getTag();
         if (correct){
@@ -187,6 +199,7 @@ public class ThirdActivity extends AppCompatActivity {
         loadQuestion(index);
     }
 
+    // Escape function for certain characters
     public String replaceChar(String string){
         String replaceString = string.replace("&#039;", "'");
         replaceString = replaceString.replace("&quot;", "\"");
@@ -203,6 +216,8 @@ public class ThirdActivity extends AppCompatActivity {
         return replaceString;
     }
 
+    // Function to determine the correct part of the string that has to be added to the url of the
+    // json request for the chosen difficulty.
     public String getDifficulty(String string){
         String difficulty = "";
         if (string.equals("Easy")){
@@ -217,6 +232,7 @@ public class ThirdActivity extends AppCompatActivity {
         return difficulty;
     }
 
+    // Get users information from database and set listener for data changes
     public void getUserFromDB(){
         Log.d("error melding", "error");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -237,6 +253,7 @@ public class ThirdActivity extends AppCompatActivity {
         });
     }
 
+    // Check if the current user is logged in, will return to log in page if not
     public void setListener(){
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override

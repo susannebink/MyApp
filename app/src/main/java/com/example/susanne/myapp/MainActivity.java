@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
     }
+    // Check if user is already signed in
     public void setListener(){
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth.addAuthStateListener(mAuthListener);
     }
 
+    // Function for the log in of a user, validates email and password
     public void signIn() {
         EditText get_email = findViewById(R.id.editText);
         EditText get_password = findViewById(R.id.editText2);
@@ -105,12 +107,16 @@ public class MainActivity extends AppCompatActivity {
                     });
         }
     }
+
+    // Function for signing up a user, validates the email
     public void signUp(){
         EditText get_email = findViewById(R.id.editText);
         EditText get_password = findViewById(R.id.editText2);
 
         email = get_email.getText().toString();
         password = get_password.getText().toString();
+
+        // Check if email and password aren't blank and checks if password is longer than six characters
         if (email.equals("")){
             Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show();
         }
@@ -120,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
         else if (password.length() < 6){
             Toast.makeText(this, "Password must be longer than 6 characters", Toast.LENGTH_SHORT).show();
         }
+
+        // Sign user up is everything was correct
         else {
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -145,14 +153,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // On click for sign in button
     public void onClickSignIn(View view) {
         signIn();
     }
 
+    // On click for sign up button
     public void onClickSignUp(View view) {
         signUp();
     }
 
+    // Add the user to the firebase database
     public void addUser(String email, String password){
         FirebaseUser user = mAuth.getCurrentUser();
         String id = user.getUid();

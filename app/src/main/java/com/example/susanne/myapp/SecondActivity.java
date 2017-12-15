@@ -33,6 +33,8 @@ public class SecondActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
     }
+
+    // Check if a user is signed in, if not go to login page
     public void setListener(){
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -50,6 +52,8 @@ public class SecondActivity extends AppCompatActivity {
             }
         };
     }
+
+    // Get the selected items from the user (category and difficulty)
     public void quizSelected(View view) {
         String item = spinner.getSelectedItem().toString();
         String difficulty_chosen = difficulty.getSelectedItem().toString();
@@ -59,6 +63,7 @@ public class SecondActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.actions, menu);
@@ -72,6 +77,7 @@ public class SecondActivity extends AppCompatActivity {
         return true;
     }
 
+    // Set the adapters for the spinners and set the items for the spinners
     public void setAdapters(){
         spinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -86,6 +92,7 @@ public class SecondActivity extends AppCompatActivity {
         difficulty.setAdapter(adapter2);
     }
 
+    // Go to scoreboard
     public void scoreBoard(View view) {
         Intent intent = new Intent(SecondActivity.this, FourthActivity.class);
         startActivity(intent);
