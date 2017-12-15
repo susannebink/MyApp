@@ -46,7 +46,7 @@ public class ScoreArrayAdapter extends ArrayAdapter {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.score_row, null);
         }
-        
+
         // Get user's name, score and rank from the arraylist
         String myName = myScoreList.get(position).getName();
         Long myScore = myScoreList.get(position).getHighScore();
