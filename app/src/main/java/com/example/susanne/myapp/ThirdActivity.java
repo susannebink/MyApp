@@ -37,13 +37,13 @@ import org.json.JSONObject;
 
 public class ThirdActivity extends AppCompatActivity {
     JSONArray quiz;
-    TextView question = findViewById(R.id.question);
+    TextView question;
     Integer index;
-    TextView A = findViewById(R.id.A);
-    TextView B = findViewById(R.id.B);
-    TextView C = findViewById(R.id.C);
-    TextView D = findViewById(R.id.D);
-    TextView points_display = findViewById(R.id.points);
+    TextView A;
+    TextView B;
+    TextView C;
+    TextView D;
+    TextView points_display;
     String id;
     UserData mUser;
     String url;
@@ -71,6 +71,12 @@ public class ThirdActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         id = user.getUid();
 
+        question = findViewById(R.id.question);
+        A = findViewById(R.id.A);
+        B = findViewById(R.id.B);
+        C = findViewById(R.id.C);
+        D = findViewById(R.id.D);
+        points_display = findViewById(R.id.points);
         points_display.setText("Score: ");
 
         getUserFromDB();
@@ -195,23 +201,6 @@ public class ThirdActivity extends AppCompatActivity {
 
         index += 1;
         loadQuestion(index);
-    }
-
-    // Escape function for certain characters
-    public String replaceChar(String string){
-        String replaceString = string.replace("&#039;", "'");
-        replaceString = replaceString.replace("&quot;", "\"");
-        replaceString = replaceString.replace("&euml;", "ë");
-        replaceString = replaceString.replace("&amp;", "&");
-        replaceString = replaceString.replace("&lsquo;", "'");
-        replaceString = replaceString.replace("&rsquo;", "'");
-        replaceString = replaceString.replace("&ldquo;", "\"");
-        replaceString = replaceString.replace("&hellip;", "...");
-        replaceString = replaceString.replace("&rdquo;", "\"");
-        replaceString = replaceString.replace("&lt;", "<");
-        replaceString = replaceString.replace("&gt;", ">");
-        replaceString = replaceString.replace("&eacute;", "é");
-        return replaceString;
     }
 
     // Function to determine the correct part of the string that has to be added to the url of the
